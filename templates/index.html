@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audiogram Generator</title>
+</head>
+<body>
+    <h2>Enter Hearing Thresholds</h2>
+    <form method="post">
+        {% for label in ['left_air', 'left_bone', 'right_air', 'right_bone'] %}
+            <h3>{{ label.replace('_', ' ').title() }}</h3>
+            {% for freq in [250, 500, 1000, 2000, 4000, 8000] %}
+                <label for="{{ label }}_{{ freq }}">{{ freq }} Hz:</label>
+                <input type="number" id="{{ label }}_{{ freq }}" name="{{ label }}_{{ freq }}" required>
+                <br>
+            {% endfor %}
+        {% endfor %}
+        <input type="submit" value="Generate Audiogram">
+    </form>
+    {% if plot_url %}
+        <h2>Audiogram</h2>
+        <img src="data:image/png;base64,{{ plot_url }}">
+    {% endif %}
+</body>
+</html>
