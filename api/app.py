@@ -22,22 +22,17 @@ def index():
 
         # Generate plot
         fig, ax = plt.subplots()
-        for key, color, label in zip(
-            ['left_air', 'left_bone', 'right_air', 'right_bone'],
-            ['blue', 'cyan', 'red', 'magenta'],
-            ['Left Air', 'Left Bone', 'Right Air', 'Right Bone']
-        ):
-            ax.plot(frequencies, results[key], marker='o', linestyle='-', color=color, label=label)
+        ax.plot(frequencies, results['right_air'], marker='o', linestyle='-', color='red', label='Right Ear Air')
+        ax.plot(frequencies, results['left_air'], marker='x', linestyle='-', color='blue', label='Left Ear Air')
+        ax.plot(frequencies, results['right_bone'], marker='<', linestyle=':', color='red', label='Right Ear Bone')
+        ax.plot(frequencies, results['left_bone'], marker='>', linestyle=':', color='blue', label='Left Ear Bone')
 
         ax.set_title('Audiogram')
         ax.set_xlabel('Frequency (Hz)')
         ax.set_ylabel('Hearing Threshold (dB HL)')
-        
-        # Explicitly set the y-axis range and ticks
         ax.set_ylim(120, -10)
-        y_ticks = list(range(-10, 121, 10))  # Generates ticks from -10 to 120, inclusive, every 10 units
+        y_ticks = list(range(-10, 121, 10))
         ax.set_yticks(y_ticks)
-
         ax.set_xscale('log')
         ax.set_xticks(frequencies)
         ax.get_xaxis().set_major_formatter(plt.ScalarFormatter())
